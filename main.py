@@ -72,8 +72,8 @@ def game():
 
         player.move_x(dx) # Uses dx to move player
 
-        player.draw_player('player.png', screen)
-        enemy.draw_enemy('enemy.png', screen)
+        player.draw_character('player.png', screen)
+        enemy.draw_character('enemy.png', screen)
         pygame.display.update()
 
 

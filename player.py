@@ -1,33 +1,21 @@
 import pygame
 
 from constants import *
+from character import *
 
 
 """
 Describes the Player's spaceship 
 Typical player has <{x, y}, alive, score> characteristics
 """
-class Player:
+class Player(Character):
 
     PLAYER_SIZE = 64 # Number of pixels in the image: 64x64
 
     def __init__(self):
         self.x = (WIDTH - self.PLAYER_SIZE) // 2
         self.y = HEIGHT - (self.PLAYER_SIZE * 2)
-        self.alive = True
         self.score = 0
-
-    """
-        @returns self.x
-    """
-    def get_x(self):
-        return self.x
-
-    """
-        @returns self.y
-    """
-    def get_y(self):
-        return self.y
 
     """
         @modifies self.x to self.x + dx if self.getx() >= 0 and self.getx() <= (WIDTH - self.PLAYER_SIZE) \
@@ -45,11 +33,3 @@ class Player:
         # Player moves by dx unit
         else:
             self.x += dx
-
-    """
-        @modifies output
-    """
-    def draw_player(self, iconPlayer, surface):
-        player_image = pygame.image.load(iconPlayer)
-        surface.blit(player_image, (self.get_x(), self.get_y()))
-
