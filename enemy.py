@@ -8,8 +8,8 @@ Typical player has <{x, y}, alive> characteristics
 """
 class Enemy(Character):
 
-    enemy_size_x = 55
-    enemy_size_y = 65
+    enemy_size_x = 64
+    enemy_size_y = 64
     dx = 3
     possible_dir = ('left', 'right')
 

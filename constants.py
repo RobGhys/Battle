@@ -1,3 +1,5 @@
+
+
 """
 Global functions used throughout the program
 """

@@ -1,5 +1,6 @@
 import pygame
-
+import os
+from pygame.locals import *
 from constants import *
 
 
@@ -31,6 +32,6 @@ class Character:
         @modifies output
     """
     def draw_item(self, iconCharacter, surface):
-        character_image = pygame.image.load(iconCharacter)
+        img_path = os.path.join('images', iconCharacter)
+        character_image = pygame.image.load(img_path).convert_alpha()
         surface.blit(character_image, (self.get_x(), self.get_y()))
-
