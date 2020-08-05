@@ -18,6 +18,14 @@ class Bullet(Character):
         self.y = player.get_y() - self.bullet_size_y
         self.state = self.possible_states[1]
 
+
+    """
+        @returns self.state
+    """
+    def get_state(self):
+        return self.state
+
+
     """
         @modifies self.state to 'on' if space bar was pressed
     """
@@ -29,18 +37,17 @@ class Bullet(Character):
 
 
     """
-        @modifies self.y_post to self.y - self.dy if self.y >=0 and self.state is on   
+        @modifies self.y_post to self.y - self.dy if self.y >=0 and self.state is 'on'
+        else resets self.x and self.y to initial values, and sets states to 'off'   
     """
-    def move(self):
-
+    def move(self, player):
         if self.y >= 0 and self.state == 'on':
             self.y -= self.dy
         else:
+            # Resets x, y, and state
+            self.x = player.get_x()
+            self.y = player.get_y() - self.bullet_size_y
             self.state = self.possible_states[1]
 
 
-    """
-        @returns self.state
-    """
-    def get_state(self):
-        return self.state
+

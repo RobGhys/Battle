@@ -81,7 +81,7 @@ def game():
         # Characters movement
         player.move_x(dx) # Uses dx to move player
         enemy.move(player)
-        bullet.move()
+        bullet.move(player)
 
 
         # Draw player, enemy, bullet, and score
