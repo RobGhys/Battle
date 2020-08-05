@@ -15,6 +15,7 @@ class Player(Character):
         self.score = 0
         self.score_x = 10
         self.score_y = 10
+        self.ds = 10
 
 
     """
@@ -46,6 +47,13 @@ class Player(Character):
     """
     def decrease_lives(self):
         self.lives -= 1
+
+
+    """
+        @modifies self.score_post to self.score + ds
+    """
+    def increase_score(self):
+        self.score += self.ds
 
     """
         @modifies out: shows score on the screen

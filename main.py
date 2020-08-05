@@ -1,6 +1,4 @@
 import sys
-import os
-from pygame.locals import *
 
 from player import *
 from enemy import *
@@ -39,9 +37,9 @@ def move_player(event):
     # Key pressed
     if event.type == KEYDOWN:
         if event.key == K_RIGHT:
-            dx = 2.5
+            dx = 5
         if event.key == K_LEFT:
-            dx = -2.5
+            dx = -5
 
     # Key released
     if event.type == KEYUP:
@@ -50,6 +48,24 @@ def move_player(event):
 
     return dx
 
+"""
+    Moves all characters
+"""
+def characters_movement(player, enemy, bullet, dx):
+    player.move_x(dx)  # Uses dx to move player
+    enemy.move(player)
+    bullet.move(player)
+
+
+"""
+    @modifies enemy.alive_post to False, player.score_post to player.score + ds, and bullet.state_post to 'off
+    if there is a collision between bullet and enemy
+"""
+def collision_event(bullet, enemy, player):
+    if bullet.is_colliding(enemy):
+        enemy.set_alive(False)  # Kills the enemy
+        player.increase_score()  # Increase score
+        bullet.set_state('off')  # Removes bullet
 
 """
     Quits game
@@ -58,11 +74,23 @@ def quit():
     pygame.quit()
     sys.exit()
 
+"""
+    Draws characters
+"""
+def draw(player, enemy, bullet):
+    # Draw player, enemy, bullet, and score
+    player.draw_item('player2.png', screen)
+    if enemy.get_alive():
+        enemy.draw_item('alien2.png', screen)
+    if bullet.get_state() == 'on':
+        bullet.draw_item('bullet.png', screen)
+    player.display_score(screen, game_font)
 
 """
     Game Loop
 """
 def game():
+    # Init objects
     set_window("Space Invaders", os.path.join('images', 'ufo.png'))
     player = Player() # Initializes player class
     enemy = Enemy() # Initializes enemy class
@@ -79,19 +107,11 @@ def game():
             bullet.throw_bullet(event)
 
         # Characters movement
-        player.move_x(dx) # Uses dx to move player
-        enemy.move(player)
-        bullet.move(player)
-
-
-        # Draw player, enemy, bullet, and score
-        player.draw_item('player2.png', screen)
-        if enemy.get_alive():
-            enemy.draw_item('alien2.png', screen)
-        if bullet.get_state() == 'on':
-            bullet.draw_item('bullet.png', screen)
-        player.display_score(screen, game_font)
-
+        characters_movement(player, enemy, bullet, dx)
+        # Collision check
+        collision_event(bullet, enemy, player)
+        # Draw characters
+        draw(player, enemy, bullet)
 
         # Update display
         pygame.display.update()
