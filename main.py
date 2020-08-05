@@ -10,6 +10,7 @@ pygame.init()
 #Create game screen
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 background = pygame.image.load('background.png')
+game_font = pygame.font.Font('font.ttf', 25)
 
 """
     Shows Title & icon
@@ -72,12 +73,13 @@ def game():
 
         # Characters movement
         player.move_x(dx) # Uses dx to move player
-        enemy.move()
+        enemy.move(player)
 
-        # Draw characters
-        player.draw_character('player.png', screen)
+        # Draw player, enemy, and score
+        player.draw_item('player.png', screen)
         if enemy.get_alive():
-            enemy.draw_character('enemy.png', screen)
+            enemy.draw_item('enemy.png', screen)
+        player.display_score(screen, game_font)
 
         # Update display
         pygame.display.update()

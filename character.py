@@ -30,7 +30,7 @@ class Character:
     """
         @modifies output
     """
-    def draw_character(self, iconCharacter, surface):
+    def draw_item(self, iconCharacter, surface):
         character_image = pygame.image.load(iconCharacter)
         surface.blit(character_image, (self.get_x(), self.get_y()))
 

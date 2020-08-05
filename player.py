@@ -1,20 +1,21 @@
-import pygame
-
-from constants import *
 from character import *
-
 
 """
 Describes the Player's spaceship 
-Typical player has <{x, y}, alive, score> characteristics
+Typical player has <{x, y}, lives, score, score_x, score_y> characteristics
 """
 class Player(Character):
 
     def __init__(self):
         self.x = (WIDTH - self.player_size) // 2
-        self.y = HEIGHT - (self.player_size * 2)
-        self.score = 0
+        self.y = HEIGHT - (self.player_size + 5)
+
         self.lives = 3
+
+        self.score = 0
+        self.score_x = 10
+        self.score_y = 10
+
 
     """
         @modifies self.x to self.x + dx if self.getx() >= 0 and self.getx() <= (WIDTH - self.PLAYER_SIZE) \
@@ -32,3 +33,23 @@ class Player(Character):
         # Player moves by dx unit
         else:
             self.x += dx
+
+    """
+        @returns self.lives
+    """
+    def get_lives(self):
+        return self.lives
+
+
+    """
+        @modifies self.lives_post = self.lives - 1
+    """
+    def decrease_lives(self):
+        self.lives -= 1
+
+    """
+        @modifies out: shows score on the screen
+    """
+    def display_score(self, surface, font):
+        score_box = font.render("Score: " + str(self.score), True, WHITE)
+        surface.blit(score_box, (self.score_x,self.score_y))

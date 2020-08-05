@@ -1,7 +1,4 @@
-import pygame
 import random
-
-from constants import *
 from character import *
 
 
@@ -27,14 +24,14 @@ class Enemy(Character):
         @modifies   self.x_post = self.x + self.dx if self.direction is right,
                     else self.x_post = self.x - self.dx 
     """
-    def move(self):
+    def move(self, player):
         if self.direction == self.possible_dir[1]:
             self.x += self.dx
         elif self.direction == self.possible_dir[0]:
             self.x -= self.dx
 
         # Check if enemy should not switch to a lower line
-        self.launch_jump()
+        self.launch_jump(player)
 
     """
         @modifies self.jump to True if enemy has reached game border
@@ -57,17 +54,18 @@ class Enemy(Character):
     """
         @modifies self.y_post = self.y + enemy_size_y if jump is True
     """
-    def launch_jump(self):
+    def launch_jump(self, player):
         self.check_jump_status()
         self.reset_direction()
 
-        if self.jump:
+        if self.jump and self.get_alive():
             # Checks if enemy is not in player base (= y position)
-            if self.y <= HEIGHT - (self.player_size * 2):
+            if self.y < (player.get_y() - self.player_size):
                 self.y += self.enemy_size_y
             else:
-                self.set_alive(False) # Kills enemy
-                self.dx = 0
+                # Kills enemy and hurts player
+                self.set_alive(False)
+                # TO DO : player loses 1 life
             self.jump = False
 
     """
