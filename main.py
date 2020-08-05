@@ -70,10 +70,16 @@ def game():
                 quit()
             dx = move_player(event) # Record key that was hit
 
+        # Characters movement
         player.move_x(dx) # Uses dx to move player
+        enemy.move()
 
+        # Draw characters
         player.draw_character('player.png', screen)
-        enemy.draw_character('enemy.png', screen)
+        if enemy.get_alive():
+            enemy.draw_character('enemy.png', screen)
+
+        # Update display
         pygame.display.update()
 
 

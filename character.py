@@ -9,8 +9,11 @@ Typical player has <{x, y}, alive, score> characteristics
 """
 class Character:
 
+    player_size = 64  # Number of pixels in the image: 64x64
+
     def __init__(self):
-        self.alive = True
+        self.x = 0
+        self.y = 0
 
     """
         @returns self.x
