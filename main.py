@@ -78,13 +78,17 @@ def quit():
     Draws characters
 """
 def draw(player, enemy, bullet):
-    # Draw player, enemy, bullet, and score
+    # Draw player, enemy, bullet, score, and lives
     player.draw_item('player2.png', screen)
+
     if enemy.get_alive():
         enemy.draw_item('alien2.png', screen)
+
     if bullet.get_state() == 'on':
         bullet.draw_item('bullet.png', screen)
+
     player.display_score(screen, game_font)
+    player.display_lives(screen, game_font)
 
 """
     Game Loop
@@ -94,7 +98,13 @@ def game():
     set_window("Space Invaders", os.path.join('images', 'ufo.png'))
     player = Player() # Initializes player class
     enemy = Enemy() # Initializes enemy class
-    bullet = Bullet(player)
+    bullet = Bullet(player) # Initializes bullet class
+
+    # Populates Array of enemies
+    nb_enemies = random.randint(1, 10)
+    all_enemies = []
+    for i in range(nb_enemies):
+        all_enemies.append(Enemy())
 
     while True:
         screen.blit(background, (0, 0))

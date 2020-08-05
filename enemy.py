@@ -65,7 +65,7 @@ class Enemy(Character):
             else:
                 # Kills enemy and hurts player
                 self.set_alive(False)
-                # TO DO : player loses 1 life
+                player.decrease_lives()
             self.jump = False
 
     """

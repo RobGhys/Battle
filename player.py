@@ -11,6 +11,8 @@ class Player(Character):
         self.y = HEIGHT - (self.player_size + 5)
 
         self.lives = 3
+        self.lives_x = (WIDTH - 100)
+        self.lives_y = 10
 
         self.score = 0
         self.score_x = 10
@@ -61,3 +63,10 @@ class Player(Character):
     def display_score(self, surface, font):
         score_box = font.render("Score: " + str(self.score), True, WHITE)
         surface.blit(score_box, (self.score_x,self.score_y))
+
+    """
+        @modifies out: shows lives on the screen
+    """
+    def display_lives(self, surface, font):
+        lives_box = font.render("lives: " + str(self.lives), True, RED)
+        surface.blit(lives_box, (self.lives_x, self.lives_y))
