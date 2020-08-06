@@ -1,4 +1,5 @@
 import sys
+from pygame import mixer
 
 from player import *
 from enemy import *
@@ -10,7 +11,7 @@ from big_bertha import *
     @returns dx, derivative of x
 """
 def move_player(event):
-    dx = 0 #initialization is necessary
+    dx = 0
 
     # Key pressed
     if event.type == KEYDOWN:
@@ -129,6 +130,13 @@ def draw(player, all_enemies, all_ammo, bullet):
     player.display_score(screen, game_font)
     player.display_lives(screen, game_font)
 
+"""
+    Play music
+"""
+def play_music(file, repeat):
+    sound_path = os.path.join('sounds', file)
+    mixer.music.load(sound_path)
+    mixer.music.play(repeat)
 
 """
     Quits game
@@ -187,10 +195,11 @@ if __name__ == '__main__':
     # Init pygame
     pygame.init()
 
-    # Create game screen
+    # Create game screen and launches music
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     background = set_import_image('background.png')
     game_font = pygame.font.Font('font.ttf', 25)
+    play_music('background_sound.wav', -1)
 
     # Launches game
     game()

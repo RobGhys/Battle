@@ -28,4 +28,5 @@ class Big_Bertha(Bullet):
             if event.key == K_x:
                 # Activates fire mode 'on'
                 self.state = self.possible_states[0]
+                self.play_music('bertha_blast.wav')
 

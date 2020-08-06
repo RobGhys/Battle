@@ -1,6 +1,9 @@
 import pygame
 import os
+
 from pygame.locals import *
+from pygame import mixer
+
 from constants import *
 
 
@@ -27,6 +30,13 @@ class Character:
     """
     def get_y(self):
         return self.y
+
+    """
+        Plays sound from file
+    """
+    def play_music(self, file):
+        sound_path = os.path.join('sounds', file)
+        mixer.Sound(sound_path).play()
 
     """
         @modifies draw Character on the screen

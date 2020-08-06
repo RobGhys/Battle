@@ -1,5 +1,6 @@
 import random
 import math
+
 from character import *
 
 """
@@ -36,12 +37,13 @@ class Bullet(Character):
     """
         @modifies self.state to 'on' if space bar was pressed
     """
-
     def throw_bullet(self, event):
         if event.type == KEYDOWN:
             if event.key == K_SPACE:
                 # Activates fire mode 'on'
                 self.state = self.possible_states[0]
+                self.play_music('laser_shoot.wav')
+
 
     """
         @modifies self.x and self.y to initial values, and sets states to 'off' 

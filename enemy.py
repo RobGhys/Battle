@@ -66,6 +66,8 @@ class Enemy(Character):
                 # Kills enemy and hurts player
                 self.set_alive(False)
                 player.decrease_lives()
+                self.play_music('lose_life.wav')
+
             self.jump = False
 
     """
