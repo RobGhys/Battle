@@ -64,7 +64,7 @@ class Bullet(Character):
             self.reset_bullet(player)
 
     """
-        @
+        @returns True if there is a collision between bullet and enemy, False otherwise
     """
     def is_colliding(self, enemy):
         square_dist_x = (self.x - enemy.get_x())**2
@@ -72,7 +72,7 @@ class Bullet(Character):
         distance = math.sqrt(square_dist_x + square_dist_y)
 
         # There is a collision
-        if distance <= self.bullet_size_x:
+        if distance <= self.bullet_size_x and self.state == 'on':
             return True
         # There is no collision
         else:

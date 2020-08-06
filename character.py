@@ -29,7 +29,7 @@ class Character:
         return self.y
 
     """
-        @modifies output
+        @modifies draw Character on the screen
     """
     def draw_item(self, iconCharacter, surface):
         img_path = os.path.join('images', iconCharacter)
