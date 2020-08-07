@@ -3,7 +3,6 @@ from pygame import mixer
 
 from player import *
 from enemy import *
-from bullet import *
 from big_bertha import *
 
 """
@@ -124,7 +123,7 @@ def draw(player, all_enemies, all_ammo, bullet):
         bullet.draw_item('bullet.png', screen)
 
     for bertha in all_ammo:
-        if bertha.get_state() == 'on':
+        if all_ammo[0].get_state() == 'on':
             bertha.draw_item('bullet2.png', screen)
 
     player.display_score(screen, game_font)
@@ -144,6 +143,20 @@ def play_music(file, repeat):
 def quit():
     pygame.quit()
     sys.exit()
+
+"""
+    Launches game over screen
+"""
+def game_over():
+    while True:
+        screen.blit(background, (0, 0))
+        for event in pygame.event.get():
+            # Check if exit game
+            if event.type == QUIT:
+                quit()
+        message = end_game_font.render("GAME OVER", True, WHITE)
+        screen.blit(message, ((WIDTH // 2) - 125, (HEIGHT // 2) - 25))
+        pygame.display.update()
 
 
 """
@@ -174,7 +187,6 @@ def game():
                 for bertha in all_ammo:
                     bertha.set_state('on')
 
-
         # Repopulates enemy
         if len(all_enemies) == 0:
             all_enemies = populates_with_enemies()
@@ -190,6 +202,10 @@ def game():
         # Update display
         pygame.display.update()
 
+        # Game over
+        if player.get_lives() == 0:
+            break
+
 
 if __name__ == '__main__':
     # Init pygame
@@ -199,7 +215,12 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     background = set_import_image('background.png')
     game_font = pygame.font.Font('font.ttf', 25)
+    end_game_font = pygame.font.Font('font.ttf', 50)
     play_music('background_sound.wav', -1)
 
     # Launches game
     game()
+
+    # Stops music and shows game_over screen
+    pygame.mixer.music.pause()
+    game_over()

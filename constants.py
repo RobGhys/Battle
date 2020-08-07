@@ -1,5 +1,3 @@
-
-
 """
 Global functions used throughout the program
 """
@@ -16,4 +14,3 @@ BLUE      = (  0,   0, 255)
 DARKGREEN = (  0, 155,   0)
 DARKGRAY  = ( 40,  40,  40)
 BGCOLOR   = BLACK
-

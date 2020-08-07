@@ -1,4 +1,6 @@
 import random
+import math
+
 from character import *
 
 
@@ -65,7 +67,7 @@ class Enemy(Character):
 
         if self.jump and self.get_alive():
             # Checks if enemy is not in player base (= y position)
-            if self.y < (player.get_y() - self.player_size - 30):
+            if self.y < (player.get_y() - self.player_size - 10):
                 self.y += self.enemy_size_y
             else:
                 # Kills enemy and hurts player
