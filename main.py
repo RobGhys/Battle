@@ -118,7 +118,7 @@ def draw(player, all_enemies, all_ammo, bullet):
 
     for enemy in all_enemies:
         if enemy.get_alive():
-            enemy.draw_item('alien2.png', screen)
+            enemy.draw_item(screen)
 
     if bullet.get_state() == 'on':
         bullet.draw_item('bullet.png', screen)

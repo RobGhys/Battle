@@ -12,6 +12,8 @@ class Enemy(Character):
     enemy_size_y = 64
     dx = 3
     possible_dir = ('left', 'right')
+    enemy_skin = ['alien.png', 'alien2.png', 'alien3.png', 'alien4.png', 'alien5.png', 'alien6.png', 'alien7.png',\
+                  'alien8.png', 'alien9.png', 'alien10.png', 'alien11.png']
 
     def __init__(self):
         self.x = random.randint(0, (WIDTH - self.enemy_size_x))
@@ -19,6 +21,9 @@ class Enemy(Character):
         self.direction = self.possible_dir[1]
         self.jump = False
         self.alive = True
+
+        # Randomly select one of the 11 images from self.enemy_skin list
+        self.selection = random.randint(0, 10)
 
     """
         @modifies   self.x_post = self.x + self.dx if self.direction is right,
@@ -81,3 +86,11 @@ class Enemy(Character):
     """
     def set_alive(self, alive):
         self.alive = alive
+
+    """
+        @modifies draw Character on the screen
+    """
+    def draw_item(self, surface):
+        img_path = os.path.join('images', self.enemy_skin[self.selection])
+        character_image = pygame.image.load(img_path).convert_alpha()
+        surface.blit(character_image, (self.get_x(), self.get_y()))
