@@ -6,6 +6,8 @@ from collision import *
 from movements import key_hit_movement
 from musics import play_music
 from setup import set_import_image, set_window, set_root_tiles, draw_characters
+from intro_menu import start
+from game_over import game_over
 
 
 def quit():
@@ -49,6 +51,9 @@ def game(game_screen):
 
         pygame.display.update()
 
+        if hero.get_lives() == 0:
+            return hero.get_score()
+
 
 if __name__ == '__main__':
     # Init pygame
@@ -63,4 +68,9 @@ if __name__ == '__main__':
     #play_music('background_sound.wav', -1)
 
     # Launches game
-    game(screen)
+    start(screen, background)
+    score = game(screen)
+
+    # Game over
+    pygame.mixer.music.pause()
+    game_over(screen, background, score)

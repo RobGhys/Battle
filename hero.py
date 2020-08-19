@@ -100,6 +100,9 @@ class Hero(Character):
     def increase_score(self, ds):
         self.score += ds
 
+    def get_score(self):
+        return self.score
+
     def move_x(self, dx):
         """
             @modifies self.x to self.x + dx if self.getx() >= 0 and self.getx() <= (WINDOW_WIDTH - self.character_size)
@@ -175,5 +178,3 @@ class Hero(Character):
 
         spacing_x += self.items_image_size
         self.draw_item_sub_folder('images/decor', 'coin.png', screen, WINDOW_WIDTH - spacing_x, 0)
-
-

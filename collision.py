@@ -14,7 +14,7 @@ def detect_collision(enemy, hero, weapon):
     # Checks collision between enemy and weapon
     if collision_weapon and enemy.is_alive():
         enemy.kill_enemy()
-        hero.increase_score(500)
+        hero.increase_score(100)
 
     # Checks collision between enemy and hero
     if collision_hero:
@@ -52,4 +52,3 @@ class Collision(object):
             return True
         else:
             return False
-
