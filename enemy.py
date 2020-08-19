@@ -1,98 +1,112 @@
-import random
-import math
-
 from character import *
 
 
-"""
-Describes the Enemies' characteristics 
-Typical player has <{x, y}, alive> characteristics
-"""
 class Enemy(Character):
 
-    enemy_size_x = 64
-    enemy_size_y = 64
-    dx = 3
-    possible_dir = ('left', 'right')
-    enemy_skin = ['alien.png', 'alien2.png', 'alien3.png', 'alien4.png', 'alien5.png', 'alien6.png', 'alien7.png',\
-                  'alien8.png', 'alien9.png', 'alien10.png', 'alien11.png']
+    items_image_size = 32
 
     def __init__(self):
-        self.x = random.randint(0, (WIDTH - self.enemy_size_x))
-        self.y = random.randint(0, (HEIGHT // 3))
-        self.direction = self.possible_dir[1]
-        self.jump = False
+        # Initial position -> bottom right corner
+        self.start_x = WINDOW_WIDTH - self.character_size
+        self.x = self.start_x
+        self.y = WINDOW_HEIGHT - self.character_size - (2 * TILE_SIZE) + 10
+        self.dx = 2
+        self.direction = -1
         self.alive = True
 
-        # Randomly select one of the 11 images from self.enemy_skin list
-        self.selection = random.randint(0, 10)
+        # Used for sprites
+        self.img_folder_path = 'images/enemy'
+        self.right = False
+        self.left = False
 
-    """
-        @modifies   self.x_post = self.x + self.dx if self.direction is right,
-                    else self.x_post = self.x - self.dx 
-    """
-    def move(self, player):
-        if self.direction == self.possible_dir[1]:
-            self.x += self.dx
-        elif self.direction == self.possible_dir[0]:
-            self.x -= self.dx
+        # Lists containing each sprites for right, left, or standing, ready to use for display
+        self.sprites_right = ['R1E.png', 'R2E.png', 'R3E.png', 'R4E.png',
+                              'R5E.png', 'R6E.png', 'R7E.png', 'R8E.png',
+                              'R9E.png', 'R10E.png', 'R11E.png']
+        self.sprites_left = ['L1E.png', 'L2E.png', 'L3E.png', 'L4E.png',
+                             'L5E.png', 'L6E.png', 'L7E.png', 'L8E.png',
+                             'L9E.png', 'L10E.png', 'L11E.png']
 
-        # Check if enemy should not switch to a lower line
-        self.launch_jump(player)
+        self.walkRight = self.load_sprite_sub_folder(self.sprites_right, self.img_folder_path)
+        self.walkLeft = self.load_sprite_sub_folder(self.sprites_left, self.img_folder_path)
 
-    """
-        @modifies self.jump to True if enemy has reached game border
-    """
-    def check_jump_status(self):
-        if self.x >= (WIDTH - self.enemy_size_x) or self.x <= 0:
-            self.jump = True
+        self.frame_lasting_sprite = 3  # Each sprite should last this amount of frame in game loop
+        self.walk_count = 0
 
-    """
-        @modifies   self.direction_post = right if jumping and self.direction = left,
-                    or self.direction_post = left if jumping and self.direction = right
-    """
-    def reset_direction(self):
-        if self.jump:
-            if self.direction == self.possible_dir[1]:
-                self.direction = self.possible_dir[0]
-            else:
-                self.direction = self.possible_dir[1]
-
-    """
-        @modifies self.y_post = self.y + enemy_size_y if jump is True
-    """
-    def launch_jump(self, player):
-        self.check_jump_status()
-        self.reset_direction()
-
-        if self.jump and self.get_alive():
-            # Checks if enemy is not in player base (= y position)
-            if self.y < (player.get_y() - self.player_size - 10):
-                self.y += self.enemy_size_y
-            else:
-                # Kills enemy and hurts player
-                self.set_alive(False)
-                player.decrease_lives()
-                self.play_music('lose_life.wav')
-
-            self.jump = False
-
-    """
-        @returns self.alive
-    """
-    def get_alive(self):
+    def is_alive(self):
         return self.alive
 
-    """
-        @modifies self.alive_post = alive
-    """
-    def set_alive(self, alive):
-        self.alive = alive
+    def kill_enemy(self):
+        self.alive = False
 
-    """
-        @modifies draw Character on the screen
-    """
-    def draw_item(self, surface):
-        img_path = os.path.join('images', self.enemy_skin[self.selection])
-        character_image = pygame.image.load(img_path).convert_alpha()
-        surface.blit(character_image, (self.get_x(), self.get_y()))
+    def get_right(self):
+        return self.right
+
+    def get_left(self):
+        return self.left
+
+    def get_walk_count(self):
+        return self.walk_count
+
+    def get_timer_reset_sprite(self):
+        """
+            @returns the size until which walk_count can increase before being reset.
+            This is dependent on how many frames there are, and how long we want each frame to last.
+        """
+        return len(self.sprites_right) * self.frame_lasting_sprite
+
+    def set_right(self, right):
+        self.right = right
+
+    def set_left(self, left):
+        self.left = left
+
+    def reset_walk_count(self):
+        self.walk_count = 0
+
+    def increase_walk_count(self):
+        self.walk_count += 1
+
+    def move_x(self):
+        # Enemy goes from right-hand side to left-hand side
+        if self.get_x() >= self.start_x:
+            self.set_left(True)
+            self.set_right(False)
+            self.direction = -1
+            self.x = self.start_x - 1
+        # Enemy goes from left-hand side to right-hand side
+        elif self.get_x() <= 0:
+            self.set_left(False)
+            self.set_right(True)
+            self.direction = 1
+            self.x = 1
+        else:
+            self.x += self.dx * self.direction
+
+    def get_sprite_left(self):
+        return self.walkLeft
+
+    def get_sprite_right(self):
+        return self.walkRight
+
+    def get_sprite_standing(self):
+        return self.sprites_standing
+
+    def draw(self, screen):
+        '''Draws the Hero on the screen'''
+        # Reset walk_count if it reaches 28
+        # 28 -> 9 sprites per position (left or right) that we leave during 3 frames
+        if self.get_walk_count() + 1 >= self.get_timer_reset_sprite():
+            self.reset_walk_count()
+
+        # Battle moving to the right
+        if self.get_right():
+            # Displays the right sprite if character is moving to the right.
+            # We use the i-th position of the list of all sprites moving to the right, and (int)divide it by 3
+            self.draw_sprite(self.walkRight[self.get_walk_count() // 3], screen)
+            self.increase_walk_count()  # Increases walk_count by 1
+
+        # Battle moving to the left
+        else:
+            self.draw_sprite(self.walkLeft[self.get_walk_count() // 3], screen)
+            self.increase_walk_count()  # Increases walk_count by 1
