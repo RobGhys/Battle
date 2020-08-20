@@ -11,7 +11,7 @@ class Hero(Character):
 
     def __init__(self):
         # Initial position -> bottom left corner
-        self.x = self.character_size
+        self.x = self.character_size // 2
         self.y = WINDOW_HEIGHT - self.character_size - (2 * TILE_SIZE) + 5
 
         # Jump status
@@ -124,7 +124,7 @@ class Hero(Character):
                 direction = 1
                 if self.jump_count < 0:
                     direction = -1
-                self.y -= 0.5 * (self.jump_count**2) * direction
+                self.y -= 0.6 * (self.jump_count**2) * direction
                 self.jump_count -= 1
             else:
                 self.is_jump = False

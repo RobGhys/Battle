@@ -18,16 +18,17 @@ WINDOW = (WINDOW_WIDTH, WINDOW_HEIGHT)
 TILE_SIZE = 32
 NB_TILES_TO_FILL_SCREEN = WINDOW_WIDTH // TILE_SIZE
 
-#                       R    G    B
-WHITE               = (255, 255, 255)
-BLACK               = (  0,   0,   0)
-RED                 = (255,   0,   0)
-GREEN               = (  0, 255,   0)
-BLUE                = (  0,   0, 255)
-DARKGREEN           = (  0, 155,   0)
-DARKGRAY            = ( 40,  40,  40)
-BACKGROUNDBLUE      = (108, 140, 255)
-BULLETCOLOR         = (244, 220,  38)
+#                           R    G    B
+WHITE                   = (255, 255, 255)
+BLACK                   = (  0,   0,   0)
+RED                     = (255,   0,   0)
+GREEN                   = (  0, 255,   0)
+BLUE                    = (  0,   0, 255)
+DARKGREEN               = (  0, 155,   0)
+DARKGRAY                = ( 40,  40,  40)
+SKY_BLUE                = (108, 140, 255)
+BACKGROUND__COLOR       = ( 79,  77,  62)
+BULLETCOLOR             = (244, 220,  38)
 
 # Clock
 clock = pygame.time.Clock()

@@ -2,21 +2,38 @@ from character import *
 from hero import *
 
 
-def detect_collision(enemy, hero, weapon):
+def detect_collision(enemies, hero, weapon):
     '''
         If the enemy is colliding with weapon, kill enemy and increase player score by 500
         If the enemy is colliding with player, remove 1 life from player
     '''
     # Sets up collision detection
-    collision_weapon = Collision(enemy, weapon).get_colliding()
-    collision_hero = Collision(enemy, hero).get_colliding()
+    collision_weapon = []
+    for enemy in enemies:
+        # Associate True or False to each enemy depending on their collision status
+        collision_weapon.append(Collision(enemy, weapon).get_colliding())
 
-    # Checks collision between enemy and weapon
-    if collision_weapon and enemy.is_alive():
-        enemy.kill_enemy()
-        hero.increase_score(100)
+    collision_hero = False
+    for enemy in enemies:
+        # True if there is 1 enemy colliding with hero
+        if Collision(enemy, hero).get_colliding():
+            collision_hero = True
+            break
 
-    # Checks collision between enemy and hero
+    # Checks collisions
+    activate_collision_enemies(enemies, collision_weapon, hero)
+    activate_collision_hero(collision_hero, hero)
+
+
+def activate_collision_enemies(enemies, collision_weapon, hero):
+    for i, enemy in enumerate(enemies):
+        if collision_weapon[i] and enemy.is_alive():
+            enemy.kill_enemy()
+            enemies.remove(enemy)
+            hero.increase_score(100)
+
+
+def activate_collision_hero(collision_hero, hero):
     if collision_hero:
         # If hero has 3 lives and is hit, remove 1 life directly
         if hero.get_lives() == 3:

@@ -67,3 +67,11 @@ def movement_left(hero):
     hero.set_right(False)
     hero.set_left(True)
     return dx
+
+
+def move_characters(hero, enemies, dx_hero):
+    """Moves all characters"""
+    hero.move_x(dx_hero)
+    hero.move_y()
+    for enemy in enemies:
+        enemy.move_x()
