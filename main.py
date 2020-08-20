@@ -5,7 +5,7 @@ from decor import *
 from collision import *
 from movements import key_hit_movement, move_characters
 from musics import play_music
-from setup import set_import_image, set_window, set_tiles, draw_characters, draw_map, set_coins
+from setup import set_import_image, set_window, set_tiles, draw_characters, draw_map, set_coins, set_enemies
 from intro_menu import start
 from game_over import game_over
 
@@ -26,7 +26,7 @@ def game(game_screen):
     set_window("Battle", os.path.join('images', 'standing.png'), game_screen)
     dx_hero = 0 # Derivate of x
     hero = Hero()  # Initializes player class
-    enemies = [Enemy()] # Initializes a list with enemy class
+    enemies = set_enemies()
     weapon = Weapon() # Initializes weapon class
     tiles = set_tiles() # List of Decor
     coins = set_coins() # List of Decor
@@ -43,7 +43,7 @@ def game(game_screen):
         move_characters(hero, enemies, dx_hero)
 
         # Collision detection
-        detect_collision(enemies, hero, weapon)
+        detect_collision(enemies, hero, weapon, coins)
 
         # Draws hero, enemy, tiles, weapon
         draw_map(game_screen, tiles, coins)

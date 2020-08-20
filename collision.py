@@ -2,7 +2,7 @@ from character import *
 from hero import *
 
 
-def detect_collision(enemies, hero, weapon):
+def detect_collision(enemies, hero, weapon, coins):
     '''
         If the enemy is colliding with weapon, kill enemy and increase player score by 500
         If the enemy is colliding with player, remove 1 life from player
@@ -13,6 +13,11 @@ def detect_collision(enemies, hero, weapon):
         # Associate True or False to each enemy depending on their collision status
         collision_weapon.append(Collision(enemy, weapon).get_colliding())
 
+    collision_coins = []
+    for coin in coins:
+        # Associate True or False to each coin depending on their collision status
+        collision_coins.append(Collision(hero, coin).get_colliding())
+
     collision_hero = False
     for enemy in enemies:
         # True if there is 1 enemy colliding with hero
@@ -22,6 +27,7 @@ def detect_collision(enemies, hero, weapon):
 
     # Checks collisions
     activate_collision_enemies(enemies, collision_weapon, hero)
+    activate_collision_coins(coins, collision_coins, hero)
     activate_collision_hero(collision_hero, hero)
 
 
@@ -31,6 +37,13 @@ def activate_collision_enemies(enemies, collision_weapon, hero):
             enemy.kill_enemy()
             enemies.remove(enemy)
             hero.increase_score(100)
+
+
+def activate_collision_coins(coins, collision_coins, hero):
+    for i, coin in enumerate(coins):
+        if collision_coins[i]:
+            coins.remove(coin)
+            hero.increase_score(20)
 
 
 def activate_collision_hero(collision_hero, hero):

@@ -1,7 +1,8 @@
 import os
 import pygame
-from global_vars import BACKGROUND__COLOR, WINDOW_HEIGHT, TILE_SIZE, NB_TILES_TO_FILL_SCREEN
+from global_vars import BACKGROUND_COLOR, WINDOW_HEIGHT, TILE_SIZE, NB_TILES_TO_FILL_SCREEN, WINDOW_WIDTH
 from decor import *
+from enemy import *
 
 
 def set_import_image(image_name):
@@ -23,7 +24,7 @@ def set_window(title, icon_screen, screen):
     pygame.display.set_caption(title)
     icon = pygame.image.load(icon_screen)
     pygame.display.set_icon(icon)
-    screen.fill(BACKGROUND__COLOR)  # Fills screen with light blue
+    screen.fill(BACKGROUND_COLOR)  # Fills screen with light blue
 
 
 def set_tiles():
@@ -60,6 +61,13 @@ def set_coins():
                               TILE_SIZE * 14, WINDOW_HEIGHT - 3 * TILE_SIZE, 4)
 
     return coins
+
+
+def set_enemies():
+    dy = 10 # To fill the gap between tile and enemy
+    return [Enemy(WINDOW_WIDTH - CHARACTER_SIZE, WINDOW_HEIGHT - CHARACTER_SIZE - (2 * TILE_SIZE) + dy),
+            Enemy((TILE_SIZE * 7), WINDOW_HEIGHT - 9 * TILE_SIZE + dy)]
+
 
 
 def create_decor_list(tmp_decor_list, image, tile_x, tile_y, nb_decor_items):

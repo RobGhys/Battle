@@ -5,11 +5,11 @@ class Enemy(Character):
 
     items_image_size = 32
 
-    def __init__(self):
+    def __init__(self, x, y):
         # Initial position -> bottom right corner
-        self.start_x = WINDOW_WIDTH - self.character_size
+        self.start_x = x
         self.x = self.start_x
-        self.y = WINDOW_HEIGHT - self.character_size - (2 * TILE_SIZE) + 10
+        self.y = y
         self.dx = 2
         self.direction = -1
         self.alive = True
