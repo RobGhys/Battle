@@ -99,21 +99,8 @@ class Collision(object):
     def on_top_of(self):
         delta_x = abs(self.x_1 - self.x_2)
         delta_y = abs(self.y_1 - self.y_2) - CHARACTER_SIZE + 10
-        #
-        # print('dx: ' + str(delta_x))
-        # print('x enemy: ' + str(self.x_1))
-        # print('x tile: ' + str(self.x_2))
-        # print('---')
-        # print('dy: ' + str(delta_x))
 
-        #print('y enemy: ' + str(self.y_1))
-        #print('y tile: ' + str(self.y_2))
-        # print('---')
         if delta_x < (self.items_image_size - 1) and delta_y <= (self.items_image_size - 1):
-            # print('y enemy: ' + str(self.y_1))
-            # print('y tile: ' + str(self.y_2))
-            # print('dy: ' + str(delta_y))
             return True
         else:
-            #print('nop ' + str(delta_x) + ' , ' + str(delta_y))
             return False

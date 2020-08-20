@@ -7,7 +7,7 @@ from movements import key_hit_movement, move_characters
 from musics import play_music
 from setup import set_import_image, set_window, set_tiles, draw_characters, draw_map, set_coins, set_enemies
 from intro_menu import start
-from game_over import game_over
+from game_over import game_over_screen
 
 
 def quit():
@@ -73,4 +73,4 @@ if __name__ == '__main__':
 
     # Game over
     pygame.mixer.music.pause()
-    game_over(screen, background, score)
+    game_over_screen(screen, background, score)

@@ -95,15 +95,12 @@ class Enemy(Character):
     def move_x(self):
         # Enemy goes from right-hand side to left-hand side
         if self.get_x() > self.max_x:
-            print('1')
-            print('x: ' + str(self.x) + ' , ' + str(self.max_x))
             self.set_left(True)
             self.set_right(False)
             self.direction = -1
             self.x = self.max_x - 1
         # Enemy goes from left-hand side to right-hand side
         elif self.get_x() < self.min_x:
-            print('2')
             self.set_left(False)
             self.set_right(True)
             self.direction = 1

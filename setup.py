@@ -59,7 +59,12 @@ def set_coins():
                               TILE_SIZE * 4, WINDOW_HEIGHT - 3 * TILE_SIZE, 4)
     coins = create_decor_list(coins, 'coin.png',
                               TILE_SIZE * 14, WINDOW_HEIGHT - 3 * TILE_SIZE, 4)
-
+    coins = create_decor_list(coins, 'coin.png',
+                              TILE_SIZE * 2, WINDOW_HEIGHT - 6 * TILE_SIZE, 4)
+    coins = create_decor_list(coins, 'coin.png',
+                              TILE_SIZE * 14, WINDOW_HEIGHT - 6 * TILE_SIZE, 4)
+    coins = create_decor_list(coins, 'coin.png',
+                              TILE_SIZE * 6, WINDOW_HEIGHT - 8 * TILE_SIZE, 8)
     return coins
 
 
