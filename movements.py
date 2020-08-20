@@ -73,5 +73,6 @@ def move_characters(hero, enemies, dx_hero):
     """Moves all characters"""
     hero.move_x(dx_hero)
     hero.move_y()
+
     for enemy in enemies:
         enemy.move_x()

@@ -9,10 +9,14 @@ class Enemy(Character):
         # Initial position -> bottom right corner
         self.start_x = x
         self.x = self.start_x
+        self.min_x = self.x
+        self.max_x = self.x
         self.y = y
         self.dx = 2
         self.direction = -1
         self.alive = True
+        self.grounded = True
+        self.reached_edge = False
 
         # Used for sprites
         self.img_folder_path = 'images/enemy'
@@ -45,6 +49,15 @@ class Enemy(Character):
     def get_left(self):
         return self.left
 
+    def get_grounded(self):
+        return self.grounded
+
+    def get_max_x(self):
+        return self.max_x
+
+    def get_min_x(self):
+        return self.min_x
+
     def get_walk_count(self):
         return self.walk_count
 
@@ -61,25 +74,40 @@ class Enemy(Character):
     def set_left(self, left):
         self.left = left
 
+    def set_max_x(self, x):
+        self.max_x = x
+
+    def set_min_x(self, x):
+        self.min_x = x
+
+    def set_grounded(self, grounded):
+        self.grounded = grounded
+
     def reset_walk_count(self):
         self.walk_count = 0
 
     def increase_walk_count(self):
         self.walk_count += 1
 
+    def reverse_direction(self):
+        self.direction *= -1
+
     def move_x(self):
         # Enemy goes from right-hand side to left-hand side
-        if self.get_x() >= self.start_x:
+        if self.get_x() > self.max_x:
+            print('1')
+            print('x: ' + str(self.x) + ' , ' + str(self.max_x))
             self.set_left(True)
             self.set_right(False)
             self.direction = -1
-            self.x = self.start_x - 1
+            self.x = self.max_x - 1
         # Enemy goes from left-hand side to right-hand side
-        elif self.get_x() <= 0:
+        elif self.get_x() < self.min_x:
+            print('2')
             self.set_left(False)
             self.set_right(True)
             self.direction = 1
-            self.x = 1
+            self.x = self.min_x
         else:
             self.x += self.dx * self.direction
 

@@ -69,7 +69,6 @@ def set_enemies():
             Enemy((TILE_SIZE * 7), WINDOW_HEIGHT - 9 * TILE_SIZE + dy)]
 
 
-
 def create_decor_list(tmp_decor_list, image, tile_x, tile_y, nb_decor_items):
     """
     :requires: x and y starting positions, list of tiles, how many tiles

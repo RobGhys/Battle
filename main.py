@@ -43,7 +43,7 @@ def game(game_screen):
         move_characters(hero, enemies, dx_hero)
 
         # Collision detection
-        detect_collision(enemies, hero, weapon, coins)
+        detect_collision(enemies, hero, weapon, coins, tiles)
 
         # Draws hero, enemy, tiles, weapon
         draw_map(game_screen, tiles, coins)
