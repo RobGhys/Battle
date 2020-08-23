@@ -1,7 +1,8 @@
 from pygame.locals import *
+from collision import tile_above_hero
 
 
-def key_hit_movement(event, hero, weapon):
+def key_hit_movement(event, hero, weapon, tiles):
     """
         @requires event != null && hero != null && event a keyboard input
         @returns dx, derivates of x
@@ -26,7 +27,8 @@ def key_hit_movement(event, hero, weapon):
                 weapon.set_facing(-1)
         elif event.key == K_SPACE:
             # Jumps
-            hero.set_jump_status(True)
+            if not tile_above_hero(tiles, hero):
+                hero.set_jump_status(True)
         elif event.key == K_r:
             # Fires a bullet
             weapon.set_fire_on_status(True)

@@ -76,6 +76,16 @@ def is_grounded(tiles, enemies):
                     enemy.set_max_x(tile.get_x())
 
 
+def tile_above_hero(tiles, hero):
+    for tile in tiles:
+        d_y = abs(tile.get_y() - hero.get_y())
+        d_x = abs(tile.get_x() - hero.get_x())
+        print(f'tile {tile.get_y()}, hero {hero.get_y()}')
+        if d_y <= 37 and d_x <= 20:
+            return True
+    return False
+
+
 class Collision(object):
     items_image_size = 32
 

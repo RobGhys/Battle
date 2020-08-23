@@ -24,7 +24,7 @@ def game(game_screen):
     """
     clock.tick(27)  # Number of frames per second
     set_window("Battle", os.path.join('images', 'standing.png'), game_screen)
-    dx_hero = 0 # Derivate of x
+    d_position_hero = 0
     hero = Hero()  # Initializes player class
     enemies = set_enemies()
     weapon = Weapon() # Initializes weapon class
@@ -37,10 +37,10 @@ def game(game_screen):
         for event in pygame.event.get():
             if event.type == QUIT:
                 quit()
-            dx_hero = key_hit_movement(event, hero, weapon)
+            d_position_hero = key_hit_movement(event, hero, weapon, tiles)
 
         # Movement
-        move_characters(hero, enemies, dx_hero)
+        move_characters(hero, enemies, d_position_hero)
 
         # Collision detection
         detect_collision(enemies, hero, weapon, coins, tiles)

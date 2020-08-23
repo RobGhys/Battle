@@ -80,6 +80,7 @@ class Hero(Character):
         self.left = left
 
     def set_jump_status(self, jumping):
+
         self.is_jump = jumping
 
     def no_movement(self):
